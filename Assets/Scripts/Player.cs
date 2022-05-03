@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
         playerRigidbody = GetComponent<Rigidbody2D> ();
 
-        Debug.Log("StratingPlayerPos" + playerObj.transform.position);
+        //Debug.Log("StratingPlayerPos" + playerObj.transform.position);
     }
 
     // Update is called once per frame
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0)) {
             dragOrigin = Input.mousePosition;
-            Debug.Log("StartingDragPos = " + dragOrigin);
+            //Debug.Log("StartingDragPos = " + dragOrigin);
         }
 
         // calculate distance between dragOrigin and new pos if the button it is still pressed
@@ -55,15 +55,21 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonUp(0)) {
             Vector3 difference = dragOrigin - Input.mousePosition;
 
-            Debug.Log("EndingDragPos = " + Input.mousePosition);
+            //Debug.Log("EndingDragPos = " + Input.mousePosition);
 
-            Debug.Log("Difference = " + difference);
+            //Debug.Log("Difference = " + difference);
 
             //playerObj.transform.position += difference;
 
-            playerRigidbody.AddForce (new Vector2(difference.x, difference.y));
+            if(Input.GetKey("space")){
+                playerRigidbody.AddForce (new Vector2(2 * difference.x, 2 * difference.y));
+            }
+            else{
+                playerRigidbody.AddForce (new Vector2(difference.x, difference.y));
+            }
+            
 
-            Debug.Log("NewPlayerPos = " + playerObj.transform.position);
+            //Debug.Log("NewPlayerPos = " + playerObj.transform.position);
         }
 
     }
