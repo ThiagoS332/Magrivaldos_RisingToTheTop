@@ -24,5 +24,7 @@ public class Goal : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL da alemanha");
+
+        ballObj.transform.position = new Vector3(0f, 0f, 0f);
     }
 }
