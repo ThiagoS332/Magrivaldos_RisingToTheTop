@@ -43,15 +43,20 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonUp(0)) {
             Vector3 difference = dragOrigin - Input.mousePosition;
 
-            //Debug.Log("EndingDragPos = " + Input.mousePosition);
+            //Debug.Log("Difference = " + difference);
+            //Debug.Log("Magnitude Difference = " + difference.magnitude);
 
-            Debug.Log("Difference = " + difference);
+            Vector3 normalized_difference = difference.normalized;
+
+            //Debug.Log("Normalized Difference = " + normalized_difference);
+
+            Vector3 force_generated = difference.magnitude * normalized_difference;
+
+            //Debug.Log("Applied Force = " + force_generated);
 
             //playerObj.transform.position += difference;
 
-            //if(difference)
-
-            if(difference.x > 100.0f){
+            /*if(difference.x > 100.0f){
                 Debug.Log("Difference X is above 100");
                 difference.x = 100.0f;
             }
@@ -61,15 +66,16 @@ public class Player : MonoBehaviour
             }
 
             if(difference.y > 100.0f){
+                Debug.Log("Difference Y is above 100");
                 difference.y = 100.0f;
             }
             else if(difference.y < -100.0f){
                 Debug.Log("Difference Y is lower than -100");
                 difference.y = -100.0f;
-            }
+            }*/
 
             if(Input.GetKey("space")){
-                playerRigidbody.AddForce (new Vector2(2 * difference.x, 2 * difference.y));
+                playerRigidbody.AddForce (new Vector2(difference.x, difference.y));
             }
             else{
                 //Debug.Log("Difference = " + difference.normalized);
