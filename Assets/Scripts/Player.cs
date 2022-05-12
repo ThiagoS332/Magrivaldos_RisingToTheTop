@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private GameObject playerObj = null;
+    //private GameObject playerObj = null;
 
     private Rigidbody2D playerRigidbody;
+
+    private bool selected = false;
 
     [SerializeField]
     private Camera cam;
@@ -16,9 +18,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (playerObj == null) {
-            playerObj = GameObject.Find("Player");
-        }
+        /*if (playerObj == null) {
+            playerObj = GameObject.Find("Magrivaldos");
+        }*/
 
         playerRigidbody = GetComponent<Rigidbody2D> ();
 
@@ -28,14 +30,25 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
+        if(selected){
+            MovePlayer();
+        }
+        
+    }
+
+    private void OnMouseDown()
+    {
+        Debug.Log("Cliquei no player");
+        selected = true;
     }
 
     private void MovePlayer()
     {
+        Debug.Log("Move Player");
+
         if(Input.GetMouseButtonDown(0)) {
             dragOrigin = Input.mousePosition;
-            //Debug.Log("StartingDragPos = " + dragOrigin);
+            Debug.Log("StartingDragPos = " + dragOrigin);
         }
 
         // calculate distance between dragOrigin and new pos if the button it is still pressed
@@ -43,7 +56,7 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonUp(0)) {
             Vector3 difference = dragOrigin - Input.mousePosition;
 
-            //Debug.Log("Difference = " + difference);
+            Debug.Log("Difference = " + difference);
             //Debug.Log("Magnitude Difference = " + difference.magnitude);
 
             Vector3 normalized_difference = difference.normalized;
@@ -76,10 +89,12 @@ public class Player : MonoBehaviour
 
             if(Input.GetKey("space")){
                 playerRigidbody.AddForce (new Vector2(difference.x, difference.y));
+                selected = false;
             }
             else{
-                //Debug.Log("Difference = " + difference.normalized);
+                Debug.Log("Difference = " + difference.normalized);
                 playerRigidbody.AddForce (new Vector3(difference.x, difference.y));
+                selected = false;
             }
             
 
@@ -89,7 +104,7 @@ public class Player : MonoBehaviour
     }
 
     // Doesn't work because after the player is deactivated it cannot be activated again as the this script stops running
-    private void ChangeStates()
+    /*private void ChangeStates()
     {
         if(Input.GetKeyDown("d")){
             playerObj.SetActive(true);
@@ -101,6 +116,6 @@ public class Player : MonoBehaviour
             Debug.Log("Desativei o player");
         }
         
-    }
+    }*/
 
 }
