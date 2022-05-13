@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class SideField_PlayerKickingArea : MonoBehaviour
 {
-    private GameObject playerObj = null;
+    [SerializeField]
+    private Camera cam;
+
+    private GameObject playerObj;
+
+    private GameObject[] players = null;
 
     private Rigidbody2D playerRigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (playerObj == null) {
-            playerObj = GameObject.Find("Player");
+        if (players == null) {
+            players = GameObject.FindGameObjectsWithTag("Magrivaldo");
         }
 
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -21,7 +26,17 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        for(int i = 0; i < players.Length; i++)
+        {
+            if(players[i].GetComponent<Player>().selected){
+                Debug.Log("Localizei o Player");
+                playerObj = players[i];
+                break;
+            }
+            else{
+                playerObj = null;
+            }
+        }
     }
 
     private /// <summary>
@@ -30,6 +45,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     /// </summary>
     void OnMouseDown()
     {
-        playerObj.transform.position = Input.mousePosition;
+        if(playerObj != null)
+            playerObj.transform.position = cam.ScreenToWorldPoint(Input.mousePosition);
     }
 }

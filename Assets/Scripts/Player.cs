@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D playerRigidbody;
 
-    private bool selected = false;
+    public bool selected = false;
 
     [SerializeField]
     private Camera cam;
@@ -32,6 +32,9 @@ public class Player : MonoBehaviour
     {
         if(selected){
             MovePlayer();
+        }
+        else{
+            Debug.Log("Sem player selecionado");
         }
         
     }
