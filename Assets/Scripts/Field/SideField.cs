@@ -8,6 +8,8 @@ public class SideField : MonoBehaviour
 
     private Rigidbody2D ballRB;
 
+    public GameObject playerKickingArea;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +33,12 @@ public class SideField : MonoBehaviour
         ballRB.angularVelocity = 0f;
 
         if(ballPosEntrance.y > 0){
-            ballObj.transform.position = new Vector3(ballPosEntrance.x, 1.8f, 0f);
+            ballObj.transform.position = new Vector3(ballPosEntrance.x, ballPosEntrance.y - 0.05f, 0f);
+            Instantiate(playerKickingArea, new Vector3(ballPosEntrance.x, ballPosEntrance.y - 0.05f, 0f), Quaternion.identity, this.transform);
         }
         else if(ballPosEntrance.y < 0){
-            ballObj.transform.position = new Vector3(ballPosEntrance.x, -1.8f, 0f);
+            ballObj.transform.position = new Vector3(ballPosEntrance.x, ballPosEntrance.y + 0.05f, 0f);
+            Instantiate(playerKickingArea, new Vector3(ballPosEntrance.x, ballPosEntrance.y+ 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 180f), this.transform);
         }
     }
 
@@ -43,7 +47,7 @@ public class SideField : MonoBehaviour
 
         Vector3 ballPosEntrance = ballObj.transform.position;
 
-        if(ballPosEntrance.y > 1.8f || ballPosEntrance.y < -1.8f){
+        if(ballPosEntrance.y > 2f || ballPosEntrance.y < -2f){
             Debug.Log("BallPos on entrance = " + ballPosEntrance);
 
             SideKick(ballPosEntrance);

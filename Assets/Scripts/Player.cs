@@ -33,25 +33,21 @@ public class Player : MonoBehaviour
         if(selected){
             MovePlayer();
         }
-        else{
-            Debug.Log("Sem player selecionado");
-        }
         
     }
 
     private void OnMouseDown()
     {
-        Debug.Log("Cliquei no player");
         selected = true;
     }
 
     private void MovePlayer()
     {
-        Debug.Log("Move Player");
+        //Debug.Log("Move Player");
 
         if(Input.GetMouseButtonDown(0)) {
             dragOrigin = Input.mousePosition;
-            Debug.Log("StartingDragPos = " + dragOrigin);
+            //Debug.Log("StartingDragPos = " + dragOrigin);
         }
 
         // calculate distance between dragOrigin and new pos if the button it is still pressed
@@ -59,8 +55,7 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonUp(0)) {
             Vector3 difference = dragOrigin - Input.mousePosition;
 
-            Debug.Log("Difference = " + difference);
-            //Debug.Log("Magnitude Difference = " + difference.magnitude);
+            //Debug.Log("Difference = " + difference);
 
             Vector3 normalized_difference = difference.normalized;
 
@@ -70,32 +65,26 @@ public class Player : MonoBehaviour
 
             //Debug.Log("Applied Force = " + force_generated);
 
-            //playerObj.transform.position += difference;
-
-            /*if(difference.x > 100.0f){
-                Debug.Log("Difference X is above 100");
-                difference.x = 100.0f;
+            if(difference.x > 150.0f){
+                difference.x = 150.0f;
             }
-            else if(difference.x < -100.0f){
-                Debug.Log("Difference X is lower than -100");
-                difference.x = -100.0f;
+            else if(difference.x < -150.0f){
+                difference.x = -150.0f;
             }
 
-            if(difference.y > 100.0f){
-                Debug.Log("Difference Y is above 100");
+            if(difference.y > 150.0f){
                 difference.y = 100.0f;
             }
-            else if(difference.y < -100.0f){
-                Debug.Log("Difference Y is lower than -100");
+            else if(difference.y < -150.0f){
                 difference.y = -100.0f;
-            }*/
+            }
 
             if(Input.GetKey("space")){
                 playerRigidbody.AddForce (new Vector2(difference.x, difference.y));
                 selected = false;
             }
             else{
-                Debug.Log("Difference = " + difference.normalized);
+                //Debug.Log("Difference = " + difference.normalized);
                 playerRigidbody.AddForce (new Vector3(difference.x, difference.y));
                 selected = false;
             }
