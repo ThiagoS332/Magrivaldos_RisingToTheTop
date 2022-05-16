@@ -35,11 +35,22 @@ public class Goal : MonoBehaviour
     {
         //StartCoroutine(ExecuteAfterTime(10));
 
-        Debug.Log("GOOOOOOOOOOOOOOOOOL da alemanha");
+        // Right Side
+        // X = 4.9 to 5.28
+        // Left Side
+        // X = -4.9 to -5.28
+        // Y = 0.47 to -0.47
 
-        ballObj.transform.position = new Vector3(0f, 0f, 0f);
+        Vector3 ballPosEntrance = ballObj.transform.position;
 
-        ballRB.velocity = new Vector2(0f, 0f);
-        ballRB.angularVelocity = 0f;
+        if((ballPosEntrance.x >= 4.9f && ballPosEntrance.x <= 5.28f) && (ballPosEntrance.y >= -0.47f && ballPosEntrance.y <= 0.47f) ||
+            (ballPosEntrance.x <= -4.9f && ballPosEntrance.x >= -5.28f) && (ballPosEntrance.y >= -0.47f && ballPosEntrance.y <= 0.47f)){
+            Debug.Log("GOOOOOOOOOOOOOOOOOL da alemanha");
+
+            ballObj.transform.position = new Vector3(0f, 0f, 0f);
+
+            ballRB.velocity = new Vector2(0f, 0f);
+            ballRB.angularVelocity = 0f;
+        }
     }
 }

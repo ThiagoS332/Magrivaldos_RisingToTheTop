@@ -65,18 +65,18 @@ public class Player : MonoBehaviour
 
             //Debug.Log("Applied Force = " + force_generated);
 
-            if(difference.x > 150.0f){
-                difference.x = 150.0f;
+            if(difference.x > 400.0f){
+                difference.x = 400.0f;
             }
-            else if(difference.x < -150.0f){
-                difference.x = -150.0f;
+            else if(difference.x < -400.0f){
+                difference.x = -400.0f;
             }
 
-            if(difference.y > 150.0f){
-                difference.y = 100.0f;
+            if(difference.y > 400.0f){
+                difference.y = 400.0f;
             }
-            else if(difference.y < -150.0f){
-                difference.y = -100.0f;
+            else if(difference.y < -400.0f){
+                difference.y = -400.0f;
             }
 
             if(Input.GetKey("space")){

@@ -52,8 +52,6 @@ public class SideField : MonoBehaviour
 
             SideKick(ballPosEntrance);
         }
-
-        
         
     }
 }
