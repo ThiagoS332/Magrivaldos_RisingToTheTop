@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8616370104515617686}
   - component: {fileID: 8616370104515617687}
   - component: {fileID: 6894221253187711016}
+  - component: {fileID: 677549293538933765}
   m_Layer: 0
   m_Name: Congaz
-  m_TagString: Congaz
+  m_TagString: Team_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,3 +122,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.07010049
+--- !u!114 &677549293538933765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616370104515617684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e6a460b5c7d2749a3085af44e28f5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: 0

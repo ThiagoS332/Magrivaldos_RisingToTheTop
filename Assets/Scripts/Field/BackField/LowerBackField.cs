@@ -30,7 +30,7 @@ public class LowerBackField : MonoBehaviour
         Debug.Log("Escanteio ou Tiro de Meta? Eis a questão");
 
         if(ballPosEntrance.x > 0){
-            if(ballObj.gameObject.tag == "Team_2"){
+            if(ballObj.gameObject.tag == "BallTeam_2"){
                 Debug.Log("Escanteio para o MAAAAAAAGRIIIIVAAAALDOOOOOOOOOOOS");
 
                 ballObj.transform.position = new Vector3(4.93f, -1.91f, 0f);
@@ -48,7 +48,7 @@ public class LowerBackField : MonoBehaviour
             }
         }
         else{
-            if(ballObj.gameObject.tag == "Team_1"){
+            if(ballObj.gameObject.tag == "BallTeam_1"){
                 Debug.Log("O árbitro ta roubando");
 
                 ballObj.transform.position = new Vector3(-4.92f, -1.91f, 0f);

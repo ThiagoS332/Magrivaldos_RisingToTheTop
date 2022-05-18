@@ -11,6 +11,10 @@ public class SideField_PlayerKickingArea : MonoBehaviour
 
     private GameObject[] players = null;
 
+    private GameObject enemyObj;
+
+    private GameObject[] enemies = null;
+
     private GameObject ballObj;
 
     private Rigidbody2D ballRigidbody;
@@ -24,7 +28,11 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     void Start()
     {
         if (players == null) {
-            players = GameObject.FindGameObjectsWithTag("Magrivaldo");
+            players = GameObject.FindGameObjectsWithTag("Team_1");
+        }
+
+        if (enemies == null) {
+            enemies = GameObject.FindGameObjectsWithTag("Team_2");
         }
 
         if(ballObj == null){
@@ -44,11 +52,10 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerObj == null || !playerObj.GetComponent<Player>().selected){
+        if((playerObj == null || !playerObj.GetComponent<Player>().selected) && ballObj.gameObject.tag == "BallTeam_2"){
             for(int i = 0; i < players.Length; i++)
             {
                 if(players[i].GetComponent<Player>().selected){
-                    Debug.Log("Localizei o Player");
                     playerObj = players[i];
                     if(this.transform.position.y > 0){
                         playerObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 0.25f, 0f);
@@ -62,6 +69,27 @@ public class SideField_PlayerKickingArea : MonoBehaviour
                 }
                 else{
                     playerObj = null;
+                }
+            }
+        }
+
+        if((enemyObj == null || !enemyObj.GetComponent<Enemy>().selected) && ballObj.gameObject.tag == "BallTeam_1"){
+            for(int i = 0; i < enemies.Length; i++)
+            {
+                if(enemies[i].GetComponent<Enemy>().selected){
+                    enemyObj = enemies[i];
+                    if(this.transform.position.y > 0){
+                        enemyObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 0.25f, 0f);
+                    }
+                    else{
+                        enemyObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.25f, 0f);
+                    }
+                    DeactivateConstrains();
+                    DestroyGameObject();
+                    break;
+                }
+                else{
+                    enemyObj = null;
                 }
             }
         }

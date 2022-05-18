@@ -33,8 +33,6 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //StartCoroutine(ExecuteAfterTime(10));
-
         // Right Side
         // X = 4.9 to 5.28
         // Left Side

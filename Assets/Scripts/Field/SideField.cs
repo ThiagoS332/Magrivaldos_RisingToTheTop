@@ -38,7 +38,7 @@ public class SideField : MonoBehaviour
         }
         else if(ballPosEntrance.y < 0){
             ballObj.transform.position = new Vector3(ballPosEntrance.x, ballPosEntrance.y + 0.05f, 0f);
-            Instantiate(playerKickingArea, new Vector3(ballPosEntrance.x, ballPosEntrance.y+ 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 180f), this.transform);
+            Instantiate(playerKickingArea, new Vector3(ballPosEntrance.x, ballPosEntrance.y + 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 180f), this.transform);
         }
     }
 

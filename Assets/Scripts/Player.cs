@@ -4,16 +4,34 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //private GameObject playerObj = null;
-
     private Rigidbody2D playerRigidbody;
 
-    public bool selected = false;
+    public bool selected;
 
     [SerializeField]
     private Camera cam;
 
     private Vector3 dragOrigin;
+
+    private float maxPullDist;
+
+    private float minPullDist;
+
+    public Player(){
+        this.maxPullDist = 400.0f;
+
+        this.minPullDist = -400.0f;
+
+        this.selected = false;
+    }
+
+    public Player(float maxPullDist, float minPullDist){
+        this.maxPullDist = maxPullDist;
+
+        this.minPullDist = minPullDist;
+
+        this.selected = false;
+    }
 
     // Start is called before the first frame update
     void Start()

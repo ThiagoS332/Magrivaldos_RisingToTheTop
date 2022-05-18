@@ -18,17 +18,17 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.collider.tag == "Magrivaldo")
+        if(col.collider.tag == "Team_1")
         {
             Debug.Log ("Os MAGRIVALDOS estãos com a bola");
 
-            gameObject.tag = "Team_1";
+            gameObject.tag = "BallTeam_1";
         }
-        else
+        else if(col.collider.tag == "Team_2")
         {
             Debug.Log ("Os outros estãos com a bola");
 
-            gameObject.tag = "Team_2";
+            gameObject.tag = "BallTeam_2";
         }
     }
 }
