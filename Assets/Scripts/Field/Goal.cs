@@ -9,6 +9,8 @@ public class Goal : MonoBehaviour
 
     private Rigidbody2D ballRB;
 
+    private AudioSource refereeWhistle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,14 +26,11 @@ public class Goal : MonoBehaviour
         
     }
 
-    IEnumerator ExecuteAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        Debug.Log("depois da espera");
+    private void PlayRefereeWhistle(){
+        refereeWhistle.Play();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         // Right Side
         // X = 4.9 to 5.28
@@ -41,9 +40,25 @@ public class Goal : MonoBehaviour
 
         Vector3 ballPosEntrance = ballObj.transform.position;
 
-        if((ballPosEntrance.x >= 4.9f && ballPosEntrance.x <= 5.28f) && (ballPosEntrance.y >= -0.47f && ballPosEntrance.y <= 0.47f) ||
+        /*if((ballPosEntrance.x >= 4.9f && ballPosEntrance.x <= 5.28f) && (ballPosEntrance.y >= -0.47f && ballPosEntrance.y <= 0.47f) ||
             (ballPosEntrance.x <= -4.9f && ballPosEntrance.x >= -5.28f) && (ballPosEntrance.y >= -0.47f && ballPosEntrance.y <= 0.47f)){
-            Debug.Log("GOOOOOOOOOOOOOOOOOL da alemanha");
+            Debug.Log("Gol");
+
+            ballObj.transform.position = new Vector3(0f, 0f, 0f);
+
+            ballRB.velocity = new Vector2(0f, 0f);
+            ballRB.angularVelocity = 0f;
+        }*/
+
+        if(other.gameObject.name == "Ball"){
+            if(ballPosEntrance.x > 0){
+                Debug.Log("Gol do Magrivaldos");
+            }
+            else{
+                Debug.Log("Gol dos Outros");
+            }
+            
+            PlayRefereeWhistle();
 
             ballObj.transform.position = new Vector3(0f, 0f, 0f);
 

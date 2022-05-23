@@ -47,9 +47,13 @@ public class SideField : MonoBehaviour
 
         Vector3 ballPosEntrance = ballObj.transform.position;
 
-        if(ballPosEntrance.y > 2f || ballPosEntrance.y < -2f){
+        /*if(ballPosEntrance.y > 2f || ballPosEntrance.y < -2f){
             Debug.Log("BallPos on entrance = " + ballPosEntrance);
 
+            SideKick(ballPosEntrance);
+        }*/
+
+        if(other.gameObject.name == "Ball"){
             SideKick(ballPosEntrance);
         }
         

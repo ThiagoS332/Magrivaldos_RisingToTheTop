@@ -48,12 +48,12 @@ public class Player : MonoBehaviour
 
         //Debug.Log("StratingPlayerPos" + playerObj.transform.position);
 
-        Component[] playerComponents = this.GetComponents(typeof(Component));
+        /*Component[] playerComponents = this.GetComponents(typeof(Component));
 
         for(int i = 0; i < playerComponents.Length; i++){
             Debug.Log("i = " + i);
             Debug.Log("Component = " + playerComponents[i]);
-        }
+        }*/
 
         /*Debug.Log("Name = " + this.ToString());
         Debug.Log("Playable = " + playerComponents[4].playable);

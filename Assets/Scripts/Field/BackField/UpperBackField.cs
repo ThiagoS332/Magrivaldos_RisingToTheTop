@@ -9,6 +9,8 @@ public class UpperBackField : MonoBehaviour
 
     private Rigidbody2D ballRB;
 
+    public GameObject playerKickingArea;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,13 +37,15 @@ public class UpperBackField : MonoBehaviour
             if(ballObj.gameObject.tag == "BallTeam_2"){
                 Debug.Log("Escanteio para o MAAAAAAAGRIIIIVAAAALDOOOOOOOOOOOS");
                 
-                ballObj.transform.position = new Vector3(4.93f, 1.885f, 0f);
+                ballObj.transform.position = new Vector3(4.903f, 1.855f, 0f);
 
                 ballRB.velocity = new Vector2(0f, 0f);
                 ballRB.angularVelocity = 0f;
+
+                Instantiate(playerKickingArea, new Vector3(4.903f + 0.05f, 1.855f + 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, -45f), this.transform);
             }
             else{
-                Debug.Log("O árbitro ta roubando");
+                Debug.Log("O árbitro ta roubando (tiro de meta)");
 
                 ballObj.transform.position = new Vector3(4.205f, -0.01f, 0f);
 
@@ -51,12 +55,14 @@ public class UpperBackField : MonoBehaviour
         }
         else{
             if(ballObj.gameObject.tag == "BallTeam_1"){
-                Debug.Log("O árbitro ta roubando");
+                Debug.Log("O árbitro ta roubando (escanteio)");
 
                 ballObj.transform.position = new Vector3(-4.92f, 1.885f, 0f);
 
                 ballObj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 ballObj.GetComponent<Rigidbody2D>().angularVelocity = 0f;
+
+                Instantiate(playerKickingArea, new Vector3(-4.92f - 0.05f, 1.885f + 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 45f), this.transform);
             }
             else{
                 Debug.Log("Tiro de meta pro MAAAAAAAGRIIIIVAAAALDOOOOOOOOOOOS");
@@ -74,9 +80,13 @@ public class UpperBackField : MonoBehaviour
     {
         Vector3 ballPosEntrance = ballObj.transform.position;
 
-        if((ballPosEntrance.x > 5.0f || ballPosEntrance.x < -5.0f) && ballPosEntrance.y > 0.5f){
+        /*if((ballPosEntrance.x > 5.0f || ballPosEntrance.x < -5.0f) && ballPosEntrance.y > 0.5f){
             Debug.Log("Bola de escanteio = " + ballPosEntrance);
 
+            CornerKick(ballPosEntrance);
+        }*/
+
+        if(other.gameObject.name == "Ball"){
             CornerKick(ballPosEntrance);
         }
         

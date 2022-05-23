@@ -70,6 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc8e690ea898f8408d584bf2b989397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballObj: {fileID: 0}
+  playerKickingArea: {fileID: 1586995453195417212, guid: 0395e70dbc98b6542aada27137e43ab7, type: 3}
 --- !u!1 &1134665996450847480
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,6 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fd46b07f8818a49bd68098b46b040e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballObj: {fileID: 0}
+  playerKickingArea: {fileID: 1586995453195417212, guid: 0395e70dbc98b6542aada27137e43ab7, type: 3}
 --- !u!1 &1134665997166414377
 GameObject:
   m_ObjectHideFlags: 0

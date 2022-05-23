@@ -6,7 +6,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
 {
     private bool kick = false;
 
-    private bool ball_kicked = false;
+    //private bool ball_kicked = false;
 
     [SerializeField]
     private Camera cam;
@@ -15,7 +15,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
 
     private GameObject[] players = null;
 
-    private GameObject enemyObj = null;
+    //private GameObject enemyObj = null;
 
     private GameObject[] enemies = null;
 
@@ -130,6 +130,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
         }*/
 
         if(kickerObj == null){
+            Debug.Log("Looking for kicker");
             if(ballObj.gameObject.tag == "BallTeam_1"){
                 for(int i = 0; i < enemies.Length; i++){
                     if(enemies[i].GetComponent<Enemy>().selected){
@@ -149,11 +150,40 @@ public class SideField_PlayerKickingArea : MonoBehaviour
 
         if(kickerObj != null){
             this.kick = true;
+            Debug.Log("Object parent: " + this.transform.parent.name);
+            string object_parent = this.transform.parent.name;
             if(this.transform.position.y > 0){
-                kickerObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 0.25f, 0f);
+                if(object_parent == "Upper"){
+                    Debug.Log("Side kick in the upper field");
+                    kickerObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 0.25f, 0f);
+                }
+                else if(object_parent == "UpperCorner"){
+                    if(this.transform.position.x > 0){
+                        Debug.Log("Corner kick in the upper RIGHT side of the field");
+                        kickerObj.transform.position = new Vector3(this.transform.position.x + 0.25f, this.transform.position.y + 0.25f, 0f);
+                    }
+                    else{
+                        Debug.Log("Corner kick in the upper LEFT side of the field");
+                        kickerObj.transform.position = new Vector3(this.transform.position.x - 0.25f, this.transform.position.y + 0.25f, 0f);
+                    }
+                }
+                
             }
             else{
-                kickerObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.25f, 0f);
+                if(object_parent == "Lower"){
+                    Debug.Log("Side kick in the lower field");
+                    kickerObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.25f, 0f);
+                }
+                else if(object_parent == "LowerCorner"){
+                    if(this.transform.position.x > 0){
+                        Debug.Log("Corner kick in the lower RIGHT side of the field");
+                        kickerObj.transform.position = new Vector3(this.transform.position.x + 0.25f, this.transform.position.y - 0.25f, 0f);
+                    }
+                    else{
+                        Debug.Log("Corner kick in the lower LEFT side of the field");
+                        kickerObj.transform.position = new Vector3(this.transform.position.x - 0.25f, this.transform.position.y - 0.25f, 0f);
+                    }
+                }
             }
         }
         
@@ -205,9 +235,14 @@ public class SideField_PlayerKickingArea : MonoBehaviour
             }
         }*/
 
+        //Debug.Log("Kick = " + this.kick);
+
         if(this.kick){
             DeactivateConstrains();
             DestroyGameObject();
+        }
+        else if(this.kick && kickerObj == null){
+            this.kick = false;
         }
 
         /*if(this.kick && kickerObj != null && !ball_kicked){
@@ -222,7 +257,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
         }*/
     }
 
-    private void Kick(GameObject kicker)
+    /*private void Kick(GameObject kicker)
     {
         if(ballObj.gameObject.tag == "BallTeam_1"){
             kicker.GetComponent<Enemy>().playable = true;
@@ -245,21 +280,21 @@ public class SideField_PlayerKickingArea : MonoBehaviour
                 kicker.GetComponent<Enemy>().playable = false;
             }
         }
-    }
+    }*/
 
     private void DeactivateConstrains()
     {
         ballRigidbody.constraints = RigidbodyConstraints2D.None;
 
         for(int i = 0; i < players.Length; i++){
-            Debug.Log("Activating player " + players[i].ToString());
+            //Debug.Log("Activating player " + players[i].ToString());
             //players[i].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
             players[i].GetComponent<Player>().selected = false;
             players[i].GetComponent<Player>().playable = true;
         }
 
         for(int i = 0; i < enemies.Length; i++){
-            Debug.Log("Activating enemy "+ enemies[i].ToString());
+            //Debug.Log("Activating enemy "+ enemies[i].ToString());
             //enemies[i].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
             enemies[i].GetComponent<Enemy>().selected = false;
             enemies[i].GetComponent<Enemy>().playable = true;
