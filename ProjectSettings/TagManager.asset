@@ -10,6 +10,7 @@ TagManager:
   - BallTeam_2
   - LeftGoal
   - RightGoal
+  - KickingArea
   layers:
   - Default
   - TransparentFX
