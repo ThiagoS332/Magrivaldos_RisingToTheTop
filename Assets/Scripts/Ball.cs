@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    public bool moving;
+
+    private Vector2 vector_zero = new Vector2(0f, 0f);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +17,12 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(this.GetComponent<Rigidbody2D>().velocity == vector_zero){
+            moving = false;
+        }
+        else{
+            moving = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)

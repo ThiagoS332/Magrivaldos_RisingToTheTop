@@ -11,7 +11,9 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     [SerializeField]
     private Camera cam;
 
-    private GameObject playerObj = null;
+    //private GameObject Teams = null;
+
+    //private GameObject playerObj = null;
 
     private GameObject[] players = null;
 
@@ -20,10 +22,6 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     private GameObject[] enemies = null;
 
     private GameObject kickerObj = null;
-
-    //private GameObject[] kickingTeamObj = null;
-
-    //private Component[] kickingTeamComp;
 
     private GameObject ballObj;
 
@@ -39,6 +37,11 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*if(Teams == null){
+            Teams = GameObject.Find("Teams");
+            Teams.GetComponent<Teams>().player_turn = !player_turn;
+        }*/
+
         if (players == null) {
             players = GameObject.FindGameObjectsWithTag("Team_1");
         }
@@ -46,23 +49,6 @@ public class SideField_PlayerKickingArea : MonoBehaviour
         if (enemies == null) {
             enemies = GameObject.FindGameObjectsWithTag("Team_2");
         }
-
-        /*if(ballObj.gameObject.tag == "BallTeam_2"){
-            kickingTeamObj = GameObject.FindGameObjectsWithTag("Team_1");
-
-            kickingTeamComp = new Component[kickingTeamObj.Length];
-            for(int i = 0; i < kickingTeamObj.Length; i++){
-                kickingTeamComp[i] = kickingTeamObj[i].GetComponent<Player>();
-            }
-        }
-        else{
-            kickingTeamObj = GameObject.FindGameObjectsWithTag("Team_2");
-
-            kickingTeamComp = new Component[kickingTeamObj.Length];
-            for(int i = 0; i < kickingTeamObj.Length; i++){
-                kickingTeamComp[i] = kickingTeamObj[i].GetComponent<Enemy>();
-            }
-        }*/
 
         if(ballObj == null){
             ballObj = GameObject.Find("Ball");
@@ -75,31 +61,15 @@ public class SideField_PlayerKickingArea : MonoBehaviour
             cam = GameObject.Find("GameCamera").GetComponent<Camera>();
         }
 
+        // Deactivate the playbility of the Magrivaldos's players
         for(int i = 0; i < players.Length; i++){
-            //Debug.Log("Deactivating player " + players[i].ToString());
-            //players[i].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             players[i].GetComponent<Player>().playable = false;
         }
 
-        /*if(ballObj.gameObject.tag == "BallTeam_1" && players != null){
-            for(int i = 0; i < players.Length; i++){
-                Debug.Log("Deactivating player ", players[i].GetComponent<Enemy>());
-                players[i].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-            }
-        }*/
-
+        // Deactivate the playbility of the enemy's players
         for(int i = 0; i < enemies.Length; i++){
-            //Debug.Log("Deactivating enemy " + enemies[i].ToString());
-            //enemies[i].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             enemies[i].GetComponent<Enemy>().playable = false;
         }
-
-        /*if(ballObj.gameObject.tag == "BallTeam_2" && enemies != null){
-            for(int i = 0; i < enemies.Length; i++){
-                Debug.Log("Deactivating enemy ", enemies[i].GetComponent<Enemy>());
-                enemies[i].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-            }
-        }*/
 
         Debug.Log("SideFieldKickingAreaPos = " + this.transform.position);
     }
@@ -107,28 +77,6 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if((kickerObj == null)){
-            for(int i = 0; i < kickingTeamComp.Length; i++)
-            {
-                if(kickingTeamComp[i].selected){
-                    kickerObj = kickingTeamObj[i];
-                    if(this.transform.position.y > 0){
-                        kickerObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 0.25f, 0f);
-                    }
-                    else{
-                        kickerObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.25f, 0f);
-                    }
-                    Kick(kickerObj);
-                    DeactivateConstrains();
-                    DestroyGameObject();
-                    break;
-                }
-            }
-        }
-        else{
-            kickerObj = null;
-        }*/
-
         if(kickerObj == null){
             Debug.Log("Looking for kicker");
             if(ballObj.gameObject.tag == "BallTeam_1"){
@@ -143,6 +91,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
                 for(int i = 0; i < players.Length; i++){
                     if(players[i].GetComponent<Player>().selected){
                         kickerObj = players[i];
+                        break;
                     }
                 }
             }
@@ -312,7 +261,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
     void OnMouseDown()
     {
         Debug.Log("Cliquei na área de lateral");
-        if(playerObj != null)
-            playerObj.transform.position = cam.ScreenToWorldPoint(Input.mousePosition);
+        /*if(playerObj != null)
+            playerObj.transform.position = cam.ScreenToWorldPoint(Input.mousePosition);*/
     }
 }

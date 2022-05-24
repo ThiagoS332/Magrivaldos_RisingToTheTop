@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
 
     private GameObject sideKickObj = null;
 
+    public AudioSource grunt;
+
     public Enemy(){
         this.maxPullDist = 400.0f;
 
@@ -183,5 +185,13 @@ public class Enemy : MonoBehaviour
         
 
         selected = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Team_1" && !this.playable)
+        {
+            grunt.Play();
+        }
     }
 }

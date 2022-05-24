@@ -12,9 +12,11 @@ public class Player : MonoBehaviour
 
     private float minPullDist;
 
+    private Vector3 dragOrigin;
+
     private Rigidbody2D playerRigidbody;
 
-    private Vector3 dragOrigin;
+    public AudioSource grunt;
 
 
     public Player(){
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
             playerObj = GameObject.Find("Magrivaldos");
         }*/
 
-        playerRigidbody = GetComponent<Rigidbody2D> ();
+        playerRigidbody = this.GetComponent<Rigidbody2D> ();
 
         //Debug.Log("StratingPlayerPos" + playerObj.transform.position);
 
@@ -122,19 +124,12 @@ public class Player : MonoBehaviour
 
     }
 
-    // Doesn't work because after the player is deactivated it cannot be activated again as the this script stops running
-    /*private void ChangeStates()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(Input.GetKeyDown("d")){
-            playerObj.SetActive(true);
-            Debug.Log("Ativei o player");
+        if (collision.gameObject.tag == "Team_2" && !this.playable)
+        {
+            grunt.Play();
         }
-
-        if(Input.GetKeyUp("d")){
-            playerObj.SetActive(false);
-            Debug.Log("Desativei o player");
-        }
-        
-    }*/
+    }
 
 }
