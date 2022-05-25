@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public bool moving;
+
     public bool selected;
 
     public bool playable;
@@ -72,6 +74,13 @@ public class Enemy : MonoBehaviour
 
         if(this.selected && this.playable){
             MoveEnemy();
+        }
+
+        if(this.GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f)){
+            moving = false;
+        }
+        else{
+            moving = true;
         }
     }
 

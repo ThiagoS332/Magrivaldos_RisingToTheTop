@@ -29,13 +29,13 @@ public class Ball : MonoBehaviour
     {
         if(col.collider.tag == "Team_1")
         {
-            Debug.Log ("Os MAGRIVALDOS estãos com a bola");
+            //Debug.Log ("Os MAGRIVALDOS estãos com a bola");
 
             gameObject.tag = "BallTeam_1";
         }
         else if(col.collider.tag == "Team_2")
         {
-            Debug.Log ("Os outros estãos com a bola");
+            //Debug.Log ("Os outros estãos com a bola");
 
             gameObject.tag = "BallTeam_2";
         }

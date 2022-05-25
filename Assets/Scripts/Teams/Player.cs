@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private bool block_selection;
+
     public bool selected;
 
     public bool playable;
+
+    public bool moving;
+
+    public bool moved;
 
     private float maxPullDist;
 
@@ -18,25 +24,22 @@ public class Player : MonoBehaviour
 
     public AudioSource grunt;
 
+    public SpriteRenderer spriteRenderer;
+    
+    public Sprite unselectedSprite;
+
+    public Sprite selectedSprite;
 
     public Player(){
         this.maxPullDist = 400.0f;
 
         this.minPullDist = -400.0f;
-
-        this.playable = true;
-
-        this.selected = false;
     }
 
     public Player(float maxPullDist, float minPullDist){
         this.maxPullDist = maxPullDist;
 
         this.minPullDist = minPullDist;
-
-        this.playable = true;
-
-        this.selected = false;
     }
 
     // Start is called before the first frame update
@@ -46,7 +49,17 @@ public class Player : MonoBehaviour
             playerObj = GameObject.Find("Magrivaldos");
         }*/
 
-        playerRigidbody = this.GetComponent<Rigidbody2D> ();
+        this.playerRigidbody = this.GetComponent<Rigidbody2D> ();
+
+        this.spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        this.playable = true;
+
+        this.selected = false;
+
+        this.block_selection = false;
+
+        this.moved = false;
 
         //Debug.Log("StratingPlayerPos" + playerObj.transform.position);
 
@@ -65,17 +78,48 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(this.selected){
+            spriteRenderer.sprite = selectedSprite; 
+        }
+        else{
+            spriteRenderer.sprite = unselectedSprite; 
+        }
+
         if(this.selected && this.playable){
             MovePlayer();
         }
+
+        if(Input.GetKey("escape")){
+            Debug.Log("Deselected player");
+            this.selected = false;
+        }
+
+        if(this.GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f)){
+            this.moving = false;
+            this.moved = false;
+            this.block_selection = false;
+        }
+        else{
+            this.moving = true;
+            this.block_selection = true;
+        }
+
+        /*if(this.moved){
+            Debug.Log("Moving " + this.ToString());
+        }*/
         
     }
 
     private void OnMouseDown()
     {
-        selected = !selected;
+        if(!block_selection){
+            this.selected = !this.selected;
+        }
+        else{
+            this.selected = false;
+        }
 
-        Debug.Log("Clicked on " + this.ToString());
+        //Debug.Log("Clicked on " + this.ToString());
     }
 
     private void MovePlayer()
@@ -108,16 +152,24 @@ public class Player : MonoBehaviour
                 difference.y = -400.0f;
             }
 
-            if(Input.GetKey("space")){
-                playerRigidbody.AddForce (new Vector2(difference.x, difference.y));
+            /*if(Input.GetKey("escape")){
                 selected = false;
             }
             else{
                 //Debug.Log("Difference = " + difference.normalized);
+                this.moved = true;
                 playerRigidbody.AddForce (new Vector3(difference.x, difference.y));
-                selected = false;
+            }*/
+
+            this.moved = true;
+
+            if(moved){
+                Debug.Log("Moved has been set to true");
             }
-            
+
+            playerRigidbody.AddForce (new Vector3(difference.x, difference.y));
+
+            this.selected = false;
 
             //Debug.Log("NewPlayerPos = " + playerObj.transform.position);
         }

@@ -7,15 +7,25 @@ public class Teams : MonoBehaviour
 {
     private bool player_turn;
 
+    public bool player_turn_UI;
+
+    private bool movement_counted;
+
     private bool sideKickChecked;
 
-    private int moves_left = 0;
+    //
+    private int moves_made_since_last_print;
+    //
+
+    private int moves_left;
 
     private int Team1_moves;
 
     private int Team2_moves;
 
-    private GameObject[] players = null;
+    private GameObject kicker;
+
+    private GameObject[] magrivaldos = null;
 
     private GameObject[] enemies = null;
 
@@ -24,8 +34,6 @@ public class Teams : MonoBehaviour
     private GameObject ballObj = null;
 
     private Rigidbody2D ballRB;
-
-    private Vector2 vector_zero = new Vector2(0f, 0f);
 
     public Teams(){
         this.player_turn = true;
@@ -62,8 +70,8 @@ public class Teams : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (players == null) {
-            players = GameObject.FindGameObjectsWithTag("Team_1");
+        if (magrivaldos == null) {
+            magrivaldos = GameObject.FindGameObjectsWithTag("Team_1");
         }
 
         if (enemies == null) {
@@ -77,23 +85,79 @@ public class Teams : MonoBehaviour
 
         if(player_turn){
             moves_left = Team1_moves;
+            kicker = magrivaldos[0];
         }
         else{
             moves_left = Team2_moves;
+            kicker = enemies[0];
         }
 
+        movement_counted = false;
+
         sideKickChecked = false;
+
+        moves_made_since_last_print = moves_left;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(ballObj.GetComponent<Ball>().moving){
-            Debug.Log("OH SHIT THE BALL IS MOVING!!! WTF?!");
-            moves_left--;
-            Debug.Log("Moves left: " + moves_left);
+        player_turn_UI = player_turn;
+        /*if(moves_made_since_last_print != moves_left){
+            Debug.Log("player turn = " + player_turn);
+            Debug.Log("kicker = " + kicker);
+            Debug.Log("Movement counted = " + movement_counted);
+            Debug.Log("Moves left = " + moves_left);
+            moves_made_since_last_print = moves_left;
+        }*/
+        
+
+        if(player_turn){
+            if(!kicker.GetComponent<Player>().selected || !kicker.GetComponent<Player>().moved){
+                for(int i = 0; i < magrivaldos.Length; i++){
+                    if(magrivaldos[i].GetComponent<Player>().selected){
+                        kicker = magrivaldos[i];
+                    }
+                }
+            }
+            
+        }
+        else{
+            for(int i = 0; i < enemies.Length; i++){
+                if(enemies[i].GetComponent<Enemy>().selected){
+                    kicker = enemies[i];
+                }
+            }
         }
 
+        if(kicker != null){
+            if(player_turn){
+                if(kicker.GetComponent<Player>().moving && !movement_counted){
+                    moves_left--;
+                    Debug.Log("Moves left: " + moves_left);
+                    movement_counted = true;
+                    Debug.Log("Movement counted = " + movement_counted);
+                }
+
+                if(!kicker.GetComponent<Player>().moving && movement_counted){
+                    Debug.Log("Deactivating movement counted");
+                    movement_counted = false;
+                }
+            }
+            else{
+                if(kicker.GetComponent<Enemy>().moving && !movement_counted){
+                    moves_left--;
+                    movement_counted = true;
+                    Debug.Log("Moves left: " + moves_left);
+                }
+
+                if(!kicker.GetComponent<Enemy>().moving && movement_counted){
+                    movement_counted = false;
+                }
+            }
+        }
+
+        // Search for instances of Side Kicks or Corner Kicks
         fieldKick = GameObject.FindGameObjectWithTag("KickingArea");
 
         if(fieldKick != null && !sideKickChecked){
@@ -101,38 +165,75 @@ public class Teams : MonoBehaviour
             player_turn = !player_turn;
             if(player_turn){
                 moves_left = Team1_moves + 1;
+
+                // Sets the first player of the Magrivaldos array as the kicker (prevent errors in the debug)
+                kicker = magrivaldos[0];
             }
             else{
                 moves_left = Team2_moves + 1;
+
+                // Sets the first player of the enemy team array as the kicker (prevent errors in the debug)
+                kicker = enemies[0];
             }
         }
         else if(fieldKick == null){
             sideKickChecked = false;
         }
+        
+        // Chenges turn if the team spend all of it's movements or pass the ball to the enemy team
+        if(player_turn && (moves_left <= 0 || ballObj.gameObject.tag == "BallTeam_2") && fieldKick == null){
+            if(moves_left <= 0){
+                Debug.Log("Player Turn Ended, because you went out of moves");
+            }
+            else{
+                Debug.Log("Player Turn Ended, because you passed the ball to the other team");
+            }
 
-        if(((moves_left <= 0 && player_turn) || ballObj.gameObject.tag == "BallTeam_2") && fieldKick == null){
             player_turn = false;
             moves_left = Team2_moves;
 
-            for(int i = 0; i < players.Length; i++){
-                players[i].GetComponent<Player>().playable = false;
+            Debug.Log("Deactivating playbility of Magrivaldos players (Teams.cs - Update())");
+            // Makes all Magrivaldos players unplayable
+            for(int i = 0; i < magrivaldos.Length; i++){
+                magrivaldos[i].GetComponent<Player>().playable = false;
             }
 
             for(int i = 0; i < enemies.Length; i++){
                 enemies[i].GetComponent<Enemy>().playable = true;
             }
+
+            // Sets the first player of the enemy team array as the kicker (prevent errors in the debug)
+            kicker = enemies[0];
+
+            // Remove the tag from the ball
+            ballObj.tag = "Untagged";
         }
-        else if(((moves_left <= 0 && !player_turn) || ballObj.gameObject.tag == "BallTeam_1") && fieldKick == null){
+        else if(!player_turn && (moves_left <= 0 || ballObj.gameObject.tag == "BallTeam_1") && fieldKick == null){
+            if(moves_left <= 0){
+                Debug.Log("Enemy Turn Ended, because you went out of moves");
+            }
+            else{
+                Debug.Log("Enemy Turn Ended, because you passed the ball to the other team");
+            }
+
             player_turn = true;
             moves_left = Team1_moves;
-
-            for(int i = 0; i < players.Length; i++){
-                players[i].GetComponent<Player>().playable = true;
+            
+            Debug.Log("Deactivating playbility of enemy players (Teams.cs - Update())");
+            // Makes all the enemy team players unplayable
+            for(int i = 0; i < magrivaldos.Length; i++){
+                magrivaldos[i].GetComponent<Player>().playable = true;
             }
 
             for(int i = 0; i < enemies.Length; i++){
                 enemies[i].GetComponent<Enemy>().playable = false;
             }
+
+            // Sets the first player of the Magrivaldos array as the kicker (prevent errors in the debug)
+            kicker = magrivaldos[0];
+
+            // Remove the tag from the ball
+            ballObj.tag = "Untagged";
         }
     }
 }
