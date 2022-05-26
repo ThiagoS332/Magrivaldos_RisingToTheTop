@@ -1,33 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyTeamTurnMarker : MonoBehaviour
 {
-    /*public SpriteRenderer spriteRenderer;
+    public Image image_UI;
     
     public Sprite turnActivate;
 
     public Sprite turnDeactivate;
 
-    private GameObject Teams = null;*/
+    private GameObject Teams = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        /*if(Teams == null){
+        if(Teams == null){
             Teams = GameObject.Find("Teams");
-        }*/
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if(!Teams.GetComponent<Teams>().player_turn_UI){
-            spriteRenderer.sprite = turnActivate;
+        if(!Teams.GetComponent<Teams>().player_turn_UI){
+            image_UI.sprite = turnActivate;
         }
         else{
-            spriteRenderer.sprite = turnDeactivate;
-        }*/
+            image_UI.sprite = turnDeactivate;
+        }
     }
 }

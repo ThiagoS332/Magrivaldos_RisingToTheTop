@@ -13,11 +13,9 @@ public class Teams : MonoBehaviour
 
     private bool sideKickChecked;
 
-    //
-    private int moves_made_since_last_print;
-    //
-
     private int moves_left;
+
+    public int moves_left_UI;
 
     private int Team1_moves;
 
@@ -95,22 +93,16 @@ public class Teams : MonoBehaviour
         movement_counted = false;
 
         sideKickChecked = false;
-
-        moves_made_since_last_print = moves_left;
     }
 
     // Update is called once per frame
     void Update()
     {
         player_turn_UI = player_turn;
-        /*if(moves_made_since_last_print != moves_left){
-            Debug.Log("player turn = " + player_turn);
-            Debug.Log("kicker = " + kicker);
-            Debug.Log("Movement counted = " + movement_counted);
-            Debug.Log("Moves left = " + moves_left);
-            moves_made_since_last_print = moves_left;
-        }*/
-        
+
+        moves_left_UI = moves_left;
+
+
 
         if(player_turn){
             if(!kicker.GetComponent<Player>().selected || !kicker.GetComponent<Player>().moved){
