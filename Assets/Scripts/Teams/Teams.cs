@@ -128,7 +128,6 @@ public class Teams : MonoBehaviour
                     moves_left--;
                     Debug.Log("Moves left: " + moves_left);
                     movement_counted = true;
-                    Debug.Log("Movement counted = " + movement_counted);
                 }
 
                 if(!kicker.GetComponent<Player>().moving && movement_counted){

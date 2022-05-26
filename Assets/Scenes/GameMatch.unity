@@ -821,6 +821,7 @@ GameObject:
   - component: {fileID: 790217909}
   - component: {fileID: 790217911}
   - component: {fileID: 790217910}
+  - component: {fileID: 790217912}
   m_Layer: 5
   m_Name: MagrivaldosGoals
   m_TagString: Untagged
@@ -889,6 +890,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790217908}
   m_CullTransparentMesh: 1
+--- !u!114 &790217912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790217908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6b96efe5fa1dc4bb21f5dd8ef97546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalsText: {fileID: 790217910}
 --- !u!1 &797797176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,6 +1096,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1086545351}
     m_Modifications:
+    - target: {fileID: 3634220066002755163, guid: b148192c6f45af94482c06c6a1970d4c, type: 3}
+      propertyPath: m_Name
+      value: RightGoalArea
+      objectReference: {fileID: 0}
     - target: {fileID: 5619261988498738636, guid: b148192c6f45af94482c06c6a1970d4c, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1921,7 +1939,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3634220066002755163, guid: b148192c6f45af94482c06c6a1970d4c, type: 3}
       propertyPath: m_Name
-      value: GoalArea
+      value: LeftGoalArea
       objectReference: {fileID: 0}
     - target: {fileID: 5619261988498738636, guid: b148192c6f45af94482c06c6a1970d4c, type: 3}
       propertyPath: m_RootOrder
@@ -2037,7 +2055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2113,7 +2131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2554,6 +2572,7 @@ GameObject:
   - component: {fileID: 2018562754}
   - component: {fileID: 2018562756}
   - component: {fileID: 2018562755}
+  - component: {fileID: 2018562757}
   m_Layer: 5
   m_Name: EnemyGoals
   m_TagString: Untagged
@@ -2622,6 +2641,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018562753}
   m_CullTransparentMesh: 1
+--- !u!114 &2018562757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018562753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424e56b680d95124c96bf53ec6e648b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalsText: {fileID: 2018562755}
 --- !u!1001 &668879956812425192
 PrefabInstance:
   m_ObjectHideFlags: 0

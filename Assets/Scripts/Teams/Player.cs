@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
 
     public Sprite selectedSprite;
 
+    private GameObject Teams = null;
+
     public Player(){
         this.maxPullDist = 400.0f;
 
@@ -45,9 +47,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*if (playerObj == null) {
-            playerObj = GameObject.Find("Magrivaldos");
-        }*/
+        if(Teams == null){
+            Teams = GameObject.Find("Teams");
+        }
 
         this.playerRigidbody = this.GetComponent<Rigidbody2D> ();
 
@@ -60,24 +62,18 @@ public class Player : MonoBehaviour
         this.block_selection = false;
 
         this.moved = false;
-
-        //Debug.Log("StratingPlayerPos" + playerObj.transform.position);
-
-        /*Component[] playerComponents = this.GetComponents(typeof(Component));
-
-        for(int i = 0; i < playerComponents.Length; i++){
-            Debug.Log("i = " + i);
-            Debug.Log("Component = " + playerComponents[i]);
-        }*/
-
-        /*Debug.Log("Name = " + this.ToString());
-        Debug.Log("Playable = " + playerComponents[4].playable);
-        Debug.Log("Selected = " + playerComponents[4].selected);*/
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*if(Teams.GetComponent<Teams>().player_turn_UI){
+            block_selection = false;
+        }
+        else{
+            block_selection = true;
+        }*/
+
         if(this.selected){
             spriteRenderer.sprite = selectedSprite; 
         }

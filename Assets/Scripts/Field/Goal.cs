@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
+    public int magrivaldosScoredGoals = 0;
+
+    public int enemyScoredGoals = 0;
 
     private GameObject ballObj = null;
 
@@ -18,6 +21,10 @@ public class Goal : MonoBehaviour
             ballObj = GameObject.Find("Ball");
             ballRB = ballObj.GetComponent<Rigidbody2D>();
         }
+        
+        magrivaldosScoredGoals = 0;
+
+        enemyScoredGoals = 0;
     }
 
     // Update is called once per frame
@@ -36,10 +43,12 @@ public class Goal : MonoBehaviour
 
         if(other.gameObject.name == "Ball"){
             if(ballPosEntrance.x > 0){
-                Debug.Log("Gol do Magrivaldos");
+                magrivaldosScoredGoals++;
+                Debug.Log("Magrivaldos Goals: " + magrivaldosScoredGoals);
             }
             else{
-                Debug.Log("Gol dos Outros");
+                enemyScoredGoals++;
+                Debug.Log("Enemy Goals: " + enemyScoredGoals);
             }
             
             //PlayRefereeWhistle();
