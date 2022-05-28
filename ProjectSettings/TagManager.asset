@@ -11,6 +11,9 @@ TagManager:
   - LeftGoal
   - RightGoal
   - KickingArea
+  - BallSideKick
+  - MagrivaldosLostBall
+  - EnemyLostBall
   layers:
   - Default
   - TransparentFX

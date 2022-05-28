@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     public bool moving;
 
+    private bool moved;
+
     public bool selected;
 
     public bool playable;
@@ -13,6 +15,8 @@ public class Enemy : MonoBehaviour
     private float maxPullDist;
 
     private float minPullDist;
+
+    private Vector2 originalPos;
 
     private Rigidbody2D enemyRigidbody;
 
@@ -44,6 +48,18 @@ public class Enemy : MonoBehaviour
         this.selected = false;
     }
 
+    public void setSelected(bool selected){
+        this.selected = selected;
+    }
+
+    public bool getMoving(){
+        return this.moving;
+    }
+
+    public Vector2 getOriginalPos(){
+        return this.originalPos;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +73,12 @@ public class Enemy : MonoBehaviour
         if (goalObj == null) {
             goalObj = GameObject.FindGameObjectsWithTag("LeftGoal");
         }
+
+        this.originalPos = this.transform.position;
+    }
+
+    public bool getMoved(){
+        return this.moved;
     }
 
     // Update is called once per frame
@@ -64,6 +86,7 @@ public class Enemy : MonoBehaviour
     {
         sideKickObj = GameObject.FindWithTag("KickingArea");
 
+        // i know this makes no f***ing sens, but if i remove this, the code breaks. So leave it alone.
         if(this.selected && this.playable && sideKickObj != null){
             this.selected = true;
         }
@@ -72,21 +95,28 @@ public class Enemy : MonoBehaviour
             MoveEnemy();
         }*/
 
-        if(this.selected && this.playable){
+        if(this.selected && this.playable && !this.moving){
             MoveEnemy();
         }
 
-        if(this.GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f)){
-            moving = false;
-        }
-        else{
-            moving = true;
-        }
+        StartCoroutine (CheckSpeed());
     }
 
     public void OnMouseDown()
     {
         selected = !selected;
+    }
+
+    private IEnumerator CheckSpeed(){
+        yield return new WaitForSeconds(1);
+        if(this.GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f)){
+            this.moving = false;
+            this.moved = false;
+        }
+        else{
+            this.moving = true;
+            this.moved = true;
+        }
     }
 
     private void MoveEnemy()
@@ -181,17 +211,9 @@ public class Enemy : MonoBehaviour
 
         Debug.Log("ForceApplied = " + forceApplied);
 
-        /*if(sideKickObj != null){
-            Debug.Log("MoveTowards");
-            this.transform.position = Vector2.MoveTowards(this.transform.position, enemy_to_ball, 10 * Time.deltaTime);
-        }
-        else{
-            Debug.Log("AddForce");
-            this.GetComponent<Rigidbody2D>().AddForce (new Vector3 (forceApplied.x, forceApplied.y));
-        }*/
-
         this.GetComponent<Rigidbody2D>().AddForce (new Vector3 (forceApplied.x, forceApplied.y));
-        
+
+        moved = true;
 
         selected = false;
     }

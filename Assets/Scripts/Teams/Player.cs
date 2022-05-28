@@ -12,11 +12,13 @@ public class Player : MonoBehaviour
 
     public bool moving;
 
-    public bool moved;
+    private bool moved;
 
     private float maxPullDist;
 
     private float minPullDist;
+
+    private Vector2 originalPos = new Vector2 (0f, 0f);
 
     private Vector3 dragOrigin;
 
@@ -32,6 +34,10 @@ public class Player : MonoBehaviour
 
     private GameObject Teams = null;
 
+    private GameObject ballObj = null;
+
+    private Rigidbody2D ballRB;
+
     public Player(){
         this.maxPullDist = 400.0f;
 
@@ -44,12 +50,27 @@ public class Player : MonoBehaviour
         this.minPullDist = minPullDist;
     }
 
+    public bool getMoved(){
+        return this.moved;
+    }
+
+    public Vector2 getOriginalPos(){
+        return this.originalPos;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         if(Teams == null){
             Teams = GameObject.Find("Teams");
         }
+
+        if (ballObj == null) {
+            ballObj = GameObject.Find("Ball");
+            ballRB = ballObj.GetComponent<Rigidbody2D>();
+        }
+
+        this.originalPos = this.transform.position;
 
         this.playerRigidbody = this.GetComponent<Rigidbody2D> ();
 
@@ -63,7 +84,7 @@ public class Player : MonoBehaviour
 
         this.moved = false;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -86,23 +107,12 @@ public class Player : MonoBehaviour
         }
 
         if(Input.GetKey("escape")){
-            Debug.Log("Deselected player");
             this.selected = false;
         }
 
-        if(this.GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f)){
-            this.moving = false;
-            this.moved = false;
-            this.block_selection = false;
+        if(ballRB.velocity == new Vector2 (0f, 0f)){
+            StartCoroutine (CheckSpeed());
         }
-        else{
-            this.moving = true;
-            this.block_selection = true;
-        }
-
-        /*if(this.moved){
-            Debug.Log("Moving " + this.ToString());
-        }*/
         
     }
 
@@ -116,6 +126,20 @@ public class Player : MonoBehaviour
         }
 
         //Debug.Log("Clicked on " + this.ToString());
+    }
+
+    private IEnumerator CheckSpeed(){
+        yield return new WaitForSeconds(1);
+        if(this.GetComponent<Rigidbody2D>().velocity == new Vector2(0f, 0f)){
+            this.moving = false;
+            this.moved = false;
+            this.block_selection = false;
+        }
+        else{
+            this.moving = true;
+            this.moved = true;            
+            this.block_selection = true;
+        }
     }
 
     private void MovePlayer()
@@ -153,15 +177,12 @@ public class Player : MonoBehaviour
             }
             else{
                 //Debug.Log("Difference = " + difference.normalized);
-                this.moved = true;
                 playerRigidbody.AddForce (new Vector3(difference.x, difference.y));
             }*/
 
             this.moved = true;
 
-            if(moved){
-                Debug.Log("Moved has been set to true");
-            }
+            Debug.Log("Moved: " + moved + "(MovePlayer)");
 
             playerRigidbody.AddForce (new Vector3(difference.x, difference.y));
 

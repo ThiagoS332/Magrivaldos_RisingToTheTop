@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: 0
   playable: 1
+  moving: 0
   grunt: {fileID: 6474512812513955228}
   spriteRenderer: {fileID: 8697143394056398937}
   unselectedSprite: {fileID: 21300000, guid: 79cc1dc6d3415e4479773a1a6de9349c, type: 3}
@@ -153,7 +154,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8d749d2963d5534488d263dff32ef823, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

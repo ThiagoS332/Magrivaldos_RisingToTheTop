@@ -49,6 +49,8 @@ public class LowerBackField : MonoBehaviour
 
                 ballRB.velocity = new Vector2(0f, 0f);
                 ballRB.angularVelocity = 0f;
+
+                //Instantiate(playerKickingArea, new Vector3(4.205f + 0.05f, -0.01f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, -90f), this.transform);
             }
         }
         else{
@@ -69,6 +71,8 @@ public class LowerBackField : MonoBehaviour
 
                 ballRB.velocity = new Vector2(0f, 0f);
                 ballRB.angularVelocity = 0f;
+
+                //Instantiate(playerKickingArea, new Vector3(-4.195f - 0.05f, -0.01f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 90f), this.transform);
             }
         }
 
