@@ -56,6 +56,10 @@ public class Enemy : MonoBehaviour
         return this.moving;
     }
 
+    public bool getPlayable(){
+        return this.playable;
+    }
+
     public Vector2 getOriginalPos(){
         return this.originalPos;
     }
@@ -222,6 +226,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Team_1" && !this.playable)
         {
+            Debug.Log("Oh, it hurts");
             grunt.Play();
         }
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyTeam : MonoBehaviour
 {
+    private bool stop;
+
     private GameObject closestEnemy;
 
     private GameObject[] enemies = null;
@@ -30,6 +32,8 @@ public class EnemyTeam : MonoBehaviour
             ballObj = GameObject.Find("Ball");
             ballRB = ballObj.GetComponent<Rigidbody2D>();
         }
+
+        stop = false;
     }
 
     private float CalculateVectorDist(Vector2 vector1, Vector2 vector2){
@@ -66,14 +70,17 @@ public class EnemyTeam : MonoBehaviour
             Debug.Log("Moving enemy");
             closestEnemy.GetComponent<Enemy>().setSelected(true);
         }
+
+        stop = false;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if(!Teams.GetComponent<Teams>().getPlayerTurn() && !ballObj.GetComponent<Ball>().getMoving()){
+        if(!Teams.GetComponent<Teams>().getPlayerTurn() && !ballObj.GetComponent<Ball>().getMoving() && !stop){
+            stop = true;
             StartCoroutine(WaitToTakeDecisions());
-        }*/
+        }
     }
 }

@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
 
     private GameObject Teams = null;
 
+    private GameObject[] Magrivaldos = null;
+
     private GameObject ballObj = null;
 
     private Rigidbody2D ballRB;
@@ -50,19 +52,15 @@ public class Player : MonoBehaviour
         this.minPullDist = minPullDist;
     }
 
-    public bool getMoved(){
-        return this.moved;
-    }
-
-    public Vector2 getOriginalPos(){
-        return this.originalPos;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         if(Teams == null){
             Teams = GameObject.Find("Teams");
+        }
+
+        if(Magrivaldos == null){
+            Magrivaldos = GameObject.FindGameObjectsWithTag("Team_1");
         }
 
         if (ballObj == null) {
@@ -84,6 +82,22 @@ public class Player : MonoBehaviour
 
         this.moved = false;
     }
+
+    public bool getMoved(){
+        return this.moved;
+    }
+
+    public bool getMoving(){
+        return this.moving;
+    }
+
+    public bool getPlayable(){
+        return this.playable;
+    }
+
+    public Vector2 getOriginalPos(){
+        return this.originalPos;
+    }
     
     // Update is called once per frame
     void Update()
@@ -95,24 +109,38 @@ public class Player : MonoBehaviour
             block_selection = true;
         }*/
 
-        if(this.selected){
-            spriteRenderer.sprite = selectedSprite; 
-        }
-        else{
-            spriteRenderer.sprite = unselectedSprite; 
-        }
-
-        if(this.selected && this.playable){
-            MovePlayer();
-        }
-
-        if(Input.GetKey("escape")){
-            this.selected = false;
+        for(int i = 0; i < Magrivaldos.Length; i++){
+            if(Magrivaldos[i].GetComponent<Player>().getMoving()){
+                this.selected = false;
+                this.block_selection = true;
+                break;
+            }
+            else{
+                this.block_selection = false;
+            }
         }
 
-        if(ballRB.velocity == new Vector2 (0f, 0f)){
-            StartCoroutine (CheckSpeed());
+        if(!ballObj.GetComponent<Ball>().getMoving()){
+            if(this.selected){
+                spriteRenderer.sprite = selectedSprite; 
+            }
+            else{
+                spriteRenderer.sprite = unselectedSprite; 
+            }
+
+            if(this.selected && this.playable){
+                MovePlayer();
+            }
+
+            if(Input.GetKey("escape")){
+                this.selected = false;
+            }
+
+            if(ballRB.velocity == new Vector2 (0f, 0f)){
+                StartCoroutine (CheckSpeed());
+            }
         }
+        
         
     }
 

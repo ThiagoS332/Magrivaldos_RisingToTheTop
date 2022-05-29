@@ -90,6 +90,8 @@ public class ScriptHolder : MonoBehaviour
         }
     }
 
+    //Formations
+
     public void ResetPlayersPos(){
         int i;
 
@@ -105,6 +107,39 @@ public class ScriptHolder : MonoBehaviour
             enemies[i].GetComponent<Rigidbody2D>().angularVelocity = 0f;
         }
     }
+
+    /*public void SetMagrivaldosOffensiveFormation(){
+        int i;
+
+        for(i = 0; i < magrivaldos.Length; i++){
+            magrivaldos[i].transform.position = magrivaldos[i].GetComponent<Player>().getOriginalPos();
+            magrivaldos[i].GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            magrivaldos[i].GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
+
+        for(i = 0; i < enemies.Length; i++){
+            enemies[i].transform.position = enemies[i].GetComponent<Enemy>().getOriginalPos();
+            enemies[i].GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            enemies[i].GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
+    }
+
+    public void SetEnemiesOffensiveFormation(){
+        int i;
+
+        for(i = 0; i < magrivaldos.Length; i++){
+            magrivaldos[i].transform.position = magrivaldos[i].GetComponent<Player>().getOriginalPos();
+            magrivaldos[i].GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            magrivaldos[i].GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
+
+        for(i = 0; i < enemies.Length; i++){
+            enemies[i].transform.position = enemies[i].GetComponent<Enemy>().getOriginalPos();
+            enemies[i].GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            enemies[i].GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
+    }*/
+
 
     public void ResetCamPos(){
         cam.transform.position = cam.GetComponent<CameraMovement>().getOriginalPos();

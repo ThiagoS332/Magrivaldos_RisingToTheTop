@@ -8,6 +8,8 @@ public class SideField_PlayerKickingArea : MonoBehaviour
 
     private string ballTag;
 
+    private string object_parent;
+
     //private bool ball_kicked = false;
 
     [SerializeField]
@@ -70,6 +72,8 @@ public class SideField_PlayerKickingArea : MonoBehaviour
             HelperUI = GameObject.Find("Helper");
         }
 
+        object_parent = this.transform.parent.name;
+
         Debug.Log("Deactivating playbility of Magrivaldos players (SideField_PlayerKickingArea.cs - Start())");
         // Deactivate the playbility of the Magrivaldos's players
         for(int i = 0; i < magrivaldos.Length; i++){
@@ -82,9 +86,9 @@ public class SideField_PlayerKickingArea : MonoBehaviour
             enemies[i].GetComponent<Enemy>().playable = false;
         }
 
-        Teams.GetComponent<Teams>().SideKick();
+        Teams.GetComponent<Teams>().SideKick(ballTag);
 
-        Debug.Log("SideFieldKickingAreaPos = " + this.transform.position);
+        //Debug.Log("SideFieldKickingAreaPos = " + this.transform.position);
     }
 
     // Update is called once per frame
@@ -116,11 +120,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
 
             this.kick = true;
 
-            //ballTag = "BallSideKick";
-
             Debug.Log("Object parent: " + this.transform.parent.name);
-
-            string object_parent = this.transform.parent.name;
 
             float kicking_area_posY = this.transform.position.y;
 
@@ -135,27 +135,10 @@ public class SideField_PlayerKickingArea : MonoBehaviour
                     if(kicking_area_posX > 0){
                         Debug.Log("Corner kick in the upper RIGHT side of the field");
                         kickerObj.transform.position = new Vector3(kicking_area_posX + 0.25f, kicking_area_posY + 0.25f, 0f);
-                        /*if(kicking_area_posX > 4.5f){
-                            Debug.Log("Corner kick in the upper RIGHT side of the field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX + 0.25f, kicking_area_posY + 0.25f, 0f);
-                        }
-                        else{
-                            Debug.Log("Goal kick on the RIGHT field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX + 0.25f, kicking_area_posY, 0f);
-                        }*/
-                        
                     }
                     else{
                         Debug.Log("Corner kick in the upper LEFT side of the field");
                         kickerObj.transform.position = new Vector3(kicking_area_posX - 0.25f, kicking_area_posY + 0.25f, 0f);
-                        /*if(kicking_area_posX < -4.5f){
-                            Debug.Log("Corner kick in the upper LEFT side of the field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX - 0.25f, kicking_area_posY + 0.25f, 0f);
-                        }
-                        else{
-                            Debug.Log("Goal kick on the LEFT field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX - 0.25f, kicking_area_posY, 0f);
-                        }*/
                     }
                 }
                 
@@ -169,26 +152,10 @@ public class SideField_PlayerKickingArea : MonoBehaviour
                     if(kicking_area_posX > 0){
                         Debug.Log("Corner kick in the lower RIGHT side of the field");
                         kickerObj.transform.position = new Vector3(kicking_area_posX + 0.25f, kicking_area_posY - 0.25f, 0f);
-                        /*if(kicking_area_posX > 4.5f){
-                            Debug.Log("Corner kick in the lower RIGHT side of the field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX + 0.25f, kicking_area_posY - 0.25f, 0f);
-                        }
-                        else{
-                            Debug.Log("Goal kick on the RIGHT field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX + 0.25f, kicking_area_posY, 0f);
-                        }*/
                     }
                     else{
                         Debug.Log("Corner kick in the lower LEFT side of the field");
                         kickerObj.transform.position = new Vector3(kicking_area_posX - 0.25f, kicking_area_posY - 0.25f, 0f);
-                        /*if(kicking_area_posX < -4.5f){
-                            Debug.Log("Corner kick in the lower LEFT side of the field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX - 0.25f, kicking_area_posY - 0.25f, 0f);
-                        }
-                        else{
-                            Debug.Log("Goal kick on the LEFT field");
-                            kickerObj.transform.position = new Vector3(kicking_area_posX - 0.25f, kicking_area_posY, 0f);
-                        }*/
                     }
                 }
             }
@@ -224,7 +191,9 @@ public class SideField_PlayerKickingArea : MonoBehaviour
 
         ballRigidbody.constraints = RigidbodyConstraints2D.None;
 
-        if(ballTag == "BallTeam_2" || ballTag == "MagrivaldosLostBall"){
+        Teams.GetComponent<Teams>().ChangeTeamsPlayability();
+
+        /*if(ballTag == "BallTeam_2" || ballTag == "MagrivaldosLostBall"){
             Debug.Log("Activating playbility of Magrivaldos players (SideField_PlayerKickingArea.cs - DeactivateConstrains())");
             for(int i = 0; i < magrivaldos.Length; i++){
                 //Debug.Log("Activating player " + magrivaldos[i].ToString());
@@ -242,7 +211,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
                 enemies[i].GetComponent<Enemy>().selected = false;
                 enemies[i].GetComponent<Enemy>().playable = true;
             }
-        }
+        }*/
     }
 
     private void DestroyGameObject()
@@ -250,6 +219,7 @@ public class SideField_PlayerKickingArea : MonoBehaviour
         Debug.Log("Destroying kicking area");
         Destroy(gameObject);
     }
+
     private /// <summary>
     /// OnMouseDown is called when the user has pressed the mouse button while
     /// over the GUIElement or Collider.

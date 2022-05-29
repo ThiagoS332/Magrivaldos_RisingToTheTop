@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    public int magrivaldosScoredGoals = 0;
+    public int magrivaldosScoredGoals;
 
-    public int enemyScoredGoals = 0;
+    public int enemyScoredGoals;
 
     private GameObject ScriptHolder;
 
@@ -19,6 +19,8 @@ public class Goal : MonoBehaviour
     private GameObject ballObj = null;
 
     private Rigidbody2D ballRB;
+
+    public AudioSource refereeWhistle;
 
     //[SerializeField]
     private Camera cam;
@@ -47,7 +49,6 @@ public class Goal : MonoBehaviour
             ballRB = ballObj.GetComponent<Rigidbody2D>();
         }
 
-
         if(cam == null){
             cam = GameObject.Find("GameCamera").GetComponent<Camera>();
         }
@@ -57,15 +58,23 @@ public class Goal : MonoBehaviour
         enemyScoredGoals = 0;
     }
 
+    public int getMagrivaldosScoredGoals(){
+        return this.magrivaldosScoredGoals;
+    }
+
+    public int getEnemyScoredGoals(){
+        return this.enemyScoredGoals;
+    }
+
     // Update is called once per frame
     void Update()
     {
         
     }
 
-    /*private void PlayRefereeWhistle(){
+    private void PlayRefereeWhistle(){
         refereeWhistle.Play();
-    }*/
+    }
 
     /*private void ResetBall(){
         ballObj.transform.position = new Vector3(0f, 0f, 0f);
@@ -112,7 +121,7 @@ public class Goal : MonoBehaviour
                 ScriptHolder.GetComponent<ScriptHolder>().LookForInitialKickers(magrivaldos);
             }
             
-            //PlayRefereeWhistle();
+            PlayRefereeWhistle();
 
             ScriptHolder.GetComponent<ScriptHolder>().ResetBallPos();
             ScriptHolder.GetComponent<ScriptHolder>().ResetCamPos();

@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e6a460b5c7d2749a3085af44e28f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moving: 0
   selected: 0
   playable: 1
   grunt: {fileID: 5523117404585436108}
@@ -150,7 +151,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 116b963f29cbb174c906da8a1134e20d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

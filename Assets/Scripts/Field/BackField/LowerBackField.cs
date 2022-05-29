@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class LowerBackField : MonoBehaviour
 {
+    private string ballTag;
+    
     public GameObject ballObj;
 
     private Rigidbody2D ballRB;
 
-    public GameObject playerKickingArea;
+    public GameObject cornerKickingArea;
+
+    public GameObject goalKickingArea;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +23,10 @@ public class LowerBackField : MonoBehaviour
         }
 
         ballRB = ballObj.GetComponent<Rigidbody2D>();
+    }
+
+    public string getOriginalBallTag(){
+        return this.ballTag;
     }
 
     // Update is called once per frame
@@ -40,7 +48,7 @@ public class LowerBackField : MonoBehaviour
                 ballRB.velocity = new Vector2(0f, 0f);
                 ballRB.angularVelocity = 0f;
 
-                Instantiate(playerKickingArea, new Vector3(4.93f + 0.05f, -1.91f - 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 225f), this.transform);
+                Instantiate(cornerKickingArea, new Vector3(4.93f + 0.05f, -1.91f - 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 225f), this.transform);
             }
             else{
                 Debug.Log("O árbitro ta roubando (tiro de meta)");
@@ -50,7 +58,7 @@ public class LowerBackField : MonoBehaviour
                 ballRB.velocity = new Vector2(0f, 0f);
                 ballRB.angularVelocity = 0f;
 
-                //Instantiate(playerKickingArea, new Vector3(4.205f + 0.05f, -0.01f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, -90f), this.transform);
+                Instantiate(goalKickingArea, new Vector3(4.205f + 0.05f, -0.01f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, -90f), this.transform);
             }
         }
         else{
@@ -62,7 +70,7 @@ public class LowerBackField : MonoBehaviour
                 ballObj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 ballObj.GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
-                Instantiate(playerKickingArea, new Vector3(-4.92f - 0.05f, -1.91f - 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, -225f), this.transform);
+                Instantiate(cornerKickingArea, new Vector3(-4.92f - 0.05f, -1.91f - 0.05f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, -225f), this.transform);
             }
             else{
                 Debug.Log("Tiro de meta pro MAAAAAAAGRIIIIVAAAALDOOOOOOOOOOOS");
@@ -72,7 +80,7 @@ public class LowerBackField : MonoBehaviour
                 ballRB.velocity = new Vector2(0f, 0f);
                 ballRB.angularVelocity = 0f;
 
-                //Instantiate(playerKickingArea, new Vector3(-4.195f - 0.05f, -0.01f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 90f), this.transform);
+                Instantiate(goalKickingArea, new Vector3(-4.195f - 0.05f, -0.01f, 0f), Quaternion.Euler(Quaternion.identity.x, Quaternion.identity.y, 90f), this.transform);
             }
         }
 
@@ -83,6 +91,7 @@ public class LowerBackField : MonoBehaviour
         Vector3 ballPosEntrance = ballObj.transform.position;
 
         if(other.gameObject.name == "Ball"){
+            ballTag = ballObj.tag;
             CornerKick(ballPosEntrance);
         }
         

@@ -23,8 +23,10 @@ public class SideField : MonoBehaviour
             ballObj = GameObject.Find("Ball");
             ballRB = ballObj.GetComponent<Rigidbody2D>();
         }
+    }
 
-
+    public string getOriginalBallTag(){
+        return this.ballTag;
     }
 
     // Update is called once per frame
@@ -68,6 +70,8 @@ public class SideField : MonoBehaviour
         }*/
 
         if(other.gameObject.name == "Ball"){
+            ballTag = ballObj.tag;
+            Debug.Log("BallTag: " + ballTag + " - SideField.cs - OnTriggerStay2D()");
             SideKick(ballPosEntrance);
         }
         
